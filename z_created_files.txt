@@ -1,0 +1,15 @@
+1. \user
+created user folder inside views folder
+
+1.1 \master.blade.php
+master page for template integration
+1.2 \header.blade.php
+page to initiate html
+1.3 \footer.blade.php
+page to end html
+1.4 \navbar.blade.php
+page for all pages directory
+1.5 \register.blade.php
+page for new user registration/ signup
+1.6 \login.blade.php
+page for existing user login

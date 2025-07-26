@@ -1,7 +1,7 @@
 
-@include ('user/header');
-@include ('user/navbar');
+@include ('user/header')
+@include ('user/navbar')
 <div class="container">
-    @yield('content');
+    @yield('content')
 </div>
-@include ('user/footer');
+@include ('user/footer')

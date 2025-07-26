@@ -1,0 +1,2 @@
+CREATE DATABASE db_tops_hisab;
+crested database in mysql

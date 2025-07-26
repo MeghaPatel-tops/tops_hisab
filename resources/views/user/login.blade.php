@@ -1,6 +1,8 @@
 @extends('user/master')
 
 @section('content')
+<div class="container mt-5">
+  <h1>Login </h1>
 <form>
   <!-- Email input -->
   <div data-mdb-input-init class="form-outline mb-4">
@@ -54,4 +56,5 @@
     </button>
   </div>
 </form>
+</div>
 @endsection
