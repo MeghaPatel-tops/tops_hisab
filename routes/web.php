@@ -6,6 +6,10 @@ Route::get('/', function () {
     return view('user.master');
 });
 
+Route::get('/register', function () {
+    return view('user.register');
+});
+
 Route::get('/login', function () {
     return view('user.login');
 });
