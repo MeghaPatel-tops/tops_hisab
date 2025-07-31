@@ -1,15 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('user.master');
 });
 
-Route::get('/register', function () {
-    return view('user.register');
-});
-
-Route::get('/login', function () {
-    return view('user.login');
-});
+Route::resource('/user',UserController::class);

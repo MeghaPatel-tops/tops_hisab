@@ -1,2 +1,14 @@
+1. created database in mysql
 CREATE DATABASE db_tops_hisab;
-crested database in mysql
+
+2. created users table to store user info
+CREATE TABLE appuser (
+    uid BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    contact BIGINT NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    profile VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL
+);
