@@ -13,3 +13,5 @@ page for all pages directory
 page for new user registration/ signup
 1.6 \login.blade.php
 page for existing user login
+1.7 \dashboard.blade.php
+page for user dasboard after login (main page)
