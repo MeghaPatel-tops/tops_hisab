@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        echo "hello";
+       return view('user.dashboard');
     }
 
     /**
@@ -42,8 +42,7 @@ class UserController extends Controller
                     'profile'=>''
             ]);
         if($result){
-            echo "<pre>";
-            print_r($result);
+            return redirect()->route('user.index');
         }
     }
 
@@ -78,4 +77,41 @@ class UserController extends Controller
     {
         //
     }
+
+    /*
+    Login form display
+    */
+    public function login()
+    {
+        return view('user.login');
+    }
+
+    // user session create using login
+
+    public function createUserSession(Request $request)
+    {
+    
+        $email = $request['email'];
+        $pwd  =    $request['pwd'];
+        $user = DB::table('appuser')->where(['email'=>$email,'password'=>$pwd])->first();
+        
+        if(isset($user)){
+            echo "jhjhjkh";
+             session()->put('user',$user);
+            //  print_r(session('user'));
+             return redirect('/user');
+        }
+        else{
+            return redirect('/login')->with('msg','Invalid credential');
+        }
+    
+    }
+
+    public function logout(Request $request){
+        if ($request->session()->exists('user')) {
+            session()->flush();
+             return redirect('/login');
+        }
+    }
+
 }

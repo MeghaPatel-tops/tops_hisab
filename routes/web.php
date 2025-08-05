@@ -9,6 +9,11 @@ Route::get('/', function () {
 
 Route::resource('/user',UserController::class);
 
+Route::get('/login',[UserController::class,'login'])->name('login');
+Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
+Route::post('/usersession',[UserController::class,'createUserSession'])->name('usersession');
+
 Route::get('/dashboard', function () {
     return view('user.dashboard');
 });

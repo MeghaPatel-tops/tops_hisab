@@ -16,6 +16,21 @@
           <a class="nav-link" href="javascript:void(0)">Link</a>
         </li>
       </ul>
+      <ul class="navbar-nav ms-auto">
+        @if(session('user'))
+        jhkhk
+        <li class="nav-item">
+          <span class="nav-link">Welcome {{session('user')->username}}</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('logout')}}">Logout</a>
+        </li>
+         @else
+         <li class="nav-item">
+          <a class="nav-link" href="{{route('login')}}">Login</a>
+        </li>
+         @endif
+      </ul>
       <!-- <form class="d-flex">
         <input class="form-control me-2" type="text" placeholder="Search">
         <button class="btn btn-primary" type="button">Search</button>
