@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Mail\VerificationMail;
 
 Route::get('/', function () {
     return view('user.master');
@@ -16,4 +17,8 @@ Route::post('/usersession',[UserController::class,'createUserSession'])->name('u
 
 Route::get('/dashboard', function () {
     return view('user.dashboard');
+});
+
+Route::get('/mail',function(){
+    Mail::to('meghapatel1.tops@gmail.com')->send(new VerificationMail());
 });
