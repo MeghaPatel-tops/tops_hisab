@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Support\Facades\DB;
 
 class VerificationMail extends Mailable
 {
@@ -17,9 +18,15 @@ class VerificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($email)
     {
+        $this->email = $email;
         $this -> otp = mt_rand (1000,9999);
+         $result =DB::table('onetimepass')->insert([
+                    'email'=>$this->email,
+                    'opt' => $this -> otp,
+                    'created_at'=>date('y:m:d H:i:s')
+            ]);
     }
 
     /**

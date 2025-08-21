@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container mt-5">
+     @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
   @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -14,7 +19,8 @@
 <h1>Registration Page</h1>
 <br>
 <form action="{{route('user.store')}}" method="POST">
-    @csrf
+   
+    <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
     <!-- Name input -->
     <div data-mdb-input-init class="form-outline mb-4">
         <label class="form-label">Name</label>
@@ -23,14 +29,20 @@
 
     <!-- Email input -->
     <div data-mdb-input-init class="form-outline mb-4">
-        <label class="form-label">Email address</label>
-        <input type="email" class="form-control" name="email"/>
+        <label class="form-label">Email address </label>
+        <input type="email" class="form-control" name="email" id="email" onfocusout="sendOpt(this.value)"/>
+    </div>
+
+     <!-- Otp input -->
+    <div data-mdb-input-init class="form-outline mb-4" id="otpid" style="display:none">
+        <label class="form-label">Enter Otp </label>
+        <input type="number" class="form-control" name="otp"  />
     </div>
 
     <!-- Phone input -->
     <div data-mdb-input-init class="form-outline mb-4">
         <label class="form-label">Phone Number</label>
-        <input type="number" class="form-control" name="contact"/>
+        <input type="number" class="form-control" name="contact" />
     </div>
 
     <!-- Password input -->

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use  App\Exceptions;
+use App\Mail\VerificationMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -28,22 +31,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = $request->validate([
+        
+        $otp = $request->otp;
+        $email=$request->email;
+        $otpCheck = DB::table('onetimepass')->where(['email'=>$email])->first();
+    
+        if($otpCheck->opt == $otp){
+      
+            $validation = $request->validate([
             'username'=>'required',
             'email'=>'required|unique:appuser|email',
             'contact'=>'required|unique:appuser',
             'password'=>'required|max:12|min:8'
-        ]);
-        $result =DB::table('appuser')->insert([
-                    'username'=>$request->username,
-                    'email' => $request->email,
-                    'contact'=>$request->contact,
-                    'password'=>$request->password,
-                    'profile'=>''
             ]);
-        if($result){
-            return redirect()->route('user.index');
+                $result =DB::table('appuser')->insert([
+                        'username'=>$request->username,
+                        'email' => $email,
+                        'contact'=>$request->contact,
+                        'password'=>$request->password,
+                        'profile'=>''
+                ]);
+                if($result){
+                    return redirect()->route('user.index');
+                }
         }
+        else{
+            return back()->with('error', 'Invalid Data');
+        }
+         
+       
     }
 
     /**
@@ -107,11 +123,28 @@ class UserController extends Controller
     
     }
 
+
+
     public function logout(Request $request){
         if ($request->session()->exists('user')) {
             session()->flush();
              return redirect('/login');
         }
+    }
+
+    public function verifyEmailByOtp(Request $request){
+        
+
+        try{
+            $validation = $request->validate([
+            'email'=>'required|unique:appuser|email'
+            ]);
+            $result=Mail::to($request->email)->send(new VerificationMail($request->email));
+            return json_encode(['status'=>1,"msg"=>"Otp sent to your email id"]);
+        }catch(\Exception $e){
+            return json_encode(['status'=>2,"msg"=>"Invalid Email Id",'error' => $e->getMessage()]);
+        }
+
     }
 
 }

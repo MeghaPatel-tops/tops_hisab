@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\VerificationMail;
 
+
 Route::get('/', function () {
     return view('user.master');
 });
@@ -20,5 +21,7 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/mail',function(){
-    Mail::to('meghapatel1.tops@gmail.com')->send(new VerificationMail());
+    Mail::to('meghapatel1.tops@gmail.com')->send(new VerificationMail('meghapatel1.tops@gmail.com'));
 });
+
+Route::post('/verifymail',[UserController::class,'verifyEmailByOtp']);
