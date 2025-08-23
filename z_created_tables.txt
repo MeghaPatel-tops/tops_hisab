@@ -12,3 +12,6 @@ CREATE TABLE appuser (
     created_at TIMESTAMP NULL DEFAULT NULL,
     updated_at TIMESTAMP NULL DEFAULT NULL
 );
+
+
+-- use migration files as reference

@@ -15,3 +15,6 @@ page for new user registration/ signup
 page for existing user login
 1.7 \dashboard.blade.php
 page for user dasboard after login (main page)
+
+1.8 \friendlist.blade.php
+page for complete management of friend list

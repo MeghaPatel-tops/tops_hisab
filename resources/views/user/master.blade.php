@@ -1,4 +1,3 @@
-
 @include ('user/header')
 @include ('user/navbar')
 <div class="container">
