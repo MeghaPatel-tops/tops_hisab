@@ -22,10 +22,12 @@
         <div class="card-body">
             <form class="row g-2">
                 <div class="col-md-10">
-                    <input type="text" class="form-control" placeholder="Search by Phone Number or Email ID">
+                    <input type="text" class="form-control" placeholder="Search by Phone Number or Email ID" id="userdata">
+                  
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-success w-100" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Search</button>
+                    <!-- <button class="btn btn-success w-100" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Search</button> -->
+                     <button class="btn btn-success w-100" type="button" onclick="getFriends()">Search</button>
                 </div>
             </form>
         </div>
@@ -104,7 +106,20 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
+        <div class="card" style="width:400px" >
+            <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image"> -->
+            <div class="card-body">
+                <h4 class="card-title" id="usernameCard">John Doe</h4>
+                <p class="card-text" id="emailCard">Some example text.</p>
+                <p class="card-text" id="contactCard">Some example text.</p>
+                <form action="{{route('addFriend')}}" method="post">
+                    @csrf
+                    <input type="hidden" name="friendId" id="friendId">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </form>
+            </div>
+            </div>
+        
       </div>
 
       <!-- Modal footer -->
@@ -117,4 +132,32 @@
 </div>
 
 </div>
+<script>
+    function getFriends(){
+        let phone= document.getElementById('userdata').value;
+        $.ajax({
+            method:'post',
+            url:'http://localhost:8000/findfriend',
+            data:{phone:phone,  "_token": "{{ csrf_token() }}"},
+
+            success:function(data){
+              
+                prepareModel(data);
+            },
+            error:function(err){
+                console.log(err);
+            }
+            
+        })
+    }
+    function prepareModel(data){
+            data = JSON.parse(data);
+            document.getElementById('usernameCard').innerHTML="Name:"+data.username;
+            document.getElementById('emailCard').innerHTML="Email:"+data.email;
+            document.getElementById('contactCard').innerHTML="Phone Number:"+data.contact;
+            document.getElementById('friendId').value=data.uid;
+           $('#myModal').modal('show')
+
+    }
+</script>
 @endsection

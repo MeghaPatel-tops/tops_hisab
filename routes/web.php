@@ -28,3 +28,6 @@ Route::post('/usersession',[UserController::class,'createUserSession'])->name('u
 Route::post('/verifymail',[UserController::class,'verifyEmailByOtp']);
 
 Route::get('/friendlist',[FriendController::class,'friendList'])->name('friendList');
+
+Route::post('/findfriend',[FriendController::class,'findFriend'])->name('findFriend');
+Route::post('/addfriend',[FriendController::class,'addFriend'])->name('addFriend');
