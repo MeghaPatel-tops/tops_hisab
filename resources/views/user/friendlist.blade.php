@@ -1,3 +1,9 @@
+<!-- <1php
+    echo "<pre>";
+    print_r($pendinglist);
+    exit;
+?> -->
+
 @extends('user/master')
 
 @section('content')
@@ -32,9 +38,8 @@
             </form>
         </div>
     </div>
-
-
-
+    
+    
 
     <!-- Pending Approval Section -->
     <div class="card mb-5 shadow-sm">
@@ -53,13 +58,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($pendinglist as $row)
                     <tr>
                         <td>1.</td>
-                        <td>Raju</td>
-                        <td>9876543210</td>
-                        <td>raju@example.com</td>
-                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                        <td>{{$row->username}}</td>
+                        <td>{{$row->contact}}</td>
+                        <td>{{$row->email}}</td>
+                        <td><span class="badge bg-warning text-dark">{{$row->status}}</span></td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -81,12 +88,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($approvedlist as $row)
                     <tr>
                         <td>1.</td>
-                        <td>Raju</td>
-                        <td>9876543210</td>
-                        <td>raju@example.com</td>
+                        <td>{{$row->username}}</td>
+                        <td>{{$row->contact}}</td>
+                        <td>{{$row->email}}</td>
+                        <!-- <td><span class="badge bg-warning text-dark">{{$row->status}}</span></td> -->
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -146,8 +156,13 @@
         dataType: 'json',
         success: function(data) {
             console.log(data);
-            
-            prepareModel(data);
+            if(data.msg){
+                alert(data.msg);
+            }
+            else{
+                prepareModel(data);
+            }
+          
         },
         error: function(err) {
             console.error("Error fetching friends:", err);

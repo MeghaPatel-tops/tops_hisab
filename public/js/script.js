@@ -7,7 +7,7 @@ function sendOpt(email){
         let token = document.getElementById('token').value;
         $.ajax({
             method:"POST",
-            url:'http://localhost:8000/verifymail',
+            url:'http://127.0.0.1:8000/verifymail',
             data:{email:email,},
             headers: {
                 'X-CSRF-TOKEN': token,
