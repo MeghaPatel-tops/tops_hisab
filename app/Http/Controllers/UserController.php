@@ -112,7 +112,6 @@ class UserController extends Controller
         $user = DB::table('appuser')->where(['email'=>$email,'password'=>$pwd])->first();
         
         if(isset($user)){
-            echo "jhjhjkh";
              session()->put('user',$user);
             //  print_r(session('user'));
              return redirect('/user');

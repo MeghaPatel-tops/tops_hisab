@@ -56,7 +56,7 @@
 
   <!-- Register buttons -->
   <div class="text-center">
-    <p>Already a member? <a href="#!">Login</a></p>
+    <p>Already a member? <a href="{{route('login')}}">Login</a></p>
   </div>
 </form>
 </div>

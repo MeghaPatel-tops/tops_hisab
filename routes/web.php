@@ -6,9 +6,6 @@ use App\Mail\VerificationMail;
 use App\Http\Controllers\FriendController;
 
 
-Route::get('/', function () {
-    return view('user.dashboard');
-});
 
 Route::resource('/user',UserController::class);
 
@@ -27,7 +24,16 @@ Route::post('/usersession',[UserController::class,'createUserSession'])->name('u
 
 Route::post('/verifymail',[UserController::class,'verifyEmailByOtp']);
 
-Route::get('/friendlist',[FriendController::class,'friendList'])->name('friendList');
 
-Route::post('/findfriend',[FriendController::class,'findFriend'])->name('findFriend');
-Route::post('/addfriend',[FriendController::class,'addFriend'])->name('addFriend');
+Route::middleware(['UserAuth'])->group(function(){
+    Route::get('/', function () { return view('user.dashboard'); });
+    
+    
+    Route::get('/friendlist',[FriendController::class,'friendList'])->name('friendList');
+  
+    Route::post('/addfriend',[FriendController::class,'addFriend'])->name('addFriend');
+
+});
+
+  Route::get('/findfriend',[FriendController::class,'findFriend'])->name('findFriend');
+

@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-2">
                     <!-- <button class="btn btn-success w-100" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Search</button> -->
-                     <button class="btn btn-success w-100" type="button" onclick="getFriends()">Search</button>
+                    <button class="btn btn-success w-100" type="button" onclick="getFriends()">Search</button>
                 </div>
             </form>
         </div>
@@ -106,7 +106,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <div class="card" style="width:400px" >
+        <div class="card" style="width: 400px; border: none; box-shadow: none;">
             <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image"> -->
             <div class="card-body">
                 <h4 class="card-title" id="usernameCard">John Doe</h4>
@@ -133,25 +133,30 @@
 
 </div>
 <script>
-    function getFriends(){
-        let phone= document.getElementById('userdata').value;
-        $.ajax({
-            method:'post',
-            url:'http://localhost:8000/findfriend',
-            data:{phone:phone,  "_token": "{{ csrf_token() }}"},
-
-            success:function(data){
-              
-                prepareModel(data);
-            },
-            error:function(err){
-                console.log(err);
-            }
-            
-        })
+ function getFriends() {
+    let phone = document.getElementById('userdata').value.trim();
+    if (!phone) {
+        alert("Please enter a phone number");
+        return;
     }
+
+    $.ajax({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/findfriend?phone=' + encodeURIComponent(phone),
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            
+            prepareModel(data);
+        },
+        error: function(err) {
+            console.error("Error fetching friends:", err);
+        }
+    });
+}
+
     function prepareModel(data){
-            data = JSON.parse(data);
+            //data = JSON.parse(data);
             document.getElementById('usernameCard').innerHTML="Name:"+data.username;
             document.getElementById('emailCard').innerHTML="Email:"+data.email;
             document.getElementById('contactCard').innerHTML="Phone Number:"+data.contact;
