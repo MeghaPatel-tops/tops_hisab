@@ -33,6 +33,10 @@ Route::middleware(['UserAuth'])->group(function(){
   
     Route::post('/addfriend',[FriendController::class,'addFriend'])->name('addFriend');
 
+    Route::get('/acceptfriend/{id}',[FriendController::class,'acceptfriend'])->name('acceptfriend');
+
+    Route::get('/declinefriend/{id}',[FriendController::class,'declinefriend'])->name('declinefriend');
+
 });
 
   Route::get('/findfriend',[FriendController::class,'findFriend'])->name('findFriend');

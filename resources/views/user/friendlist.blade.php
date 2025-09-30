@@ -21,6 +21,8 @@
     <h1 class="mb-4 text-center">Friends</h1>
 
     <!-- Add Friend Section -->
+
+    <!-- <p>No items found.</p> -->
     <div class="card mb-5 shadow-sm">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Add Friend</h5>
@@ -41,10 +43,13 @@
     
     
 
-    <!-- Pending Approval Section -->
+    @if($WaitingApprovalFriend->isEmpty())
+        <!-- <p>hello</p> -->
+    @else
+     <!-- Waiting Approval Section -->
     <div class="card mb-5 shadow-sm">
-        <div class="card-header bg-warning text-dark">
-            <h5 class="mb-0">Pending Approval</h5>
+        <div class="card-header bg-info text-dark">
+            <h5 class="mb-0">Waiting Approval from Friends</h5>
         </div>
         <div class="card-body">
             <table class="table table-hover align-middle">
@@ -58,19 +63,75 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($pendinglist as $row)
+                    @php
+                    $i = 0;
+                    @endphp
+                    @foreach($WaitingApprovalFriend as $row)
+                    @php
+                    $i++;
+                    @endphp
                     <tr>
-                        <td>1.</td>
+                        <td>{{$i}}.</td>
                         <td>{{$row->username}}</td>
                         <td>{{$row->contact}}</td>
                         <td>{{$row->email}}</td>
-                        <td><span class="badge bg-warning text-dark">{{$row->status}}</span></td>
+                        
+                        <td><span class="badge bg-light text-dark">{{$row->status}}</span></td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    @endif
+
+    @if($pendinglist->isEmpty())
+        <!-- <p>hello</p> -->
+    @else
+    <!-- Pending Approval Section -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">Pending Approval</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>User Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Accept</th>
+                        <th>Decline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $i = 0;
+                    @endphp
+                    @foreach($pendinglist as $row)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr>
+                        <td>{{$i}}.</td>
+                        <td>{{$row->username}}</td>
+                        <td>{{$row->contact}}</td>
+                        <td>{{$row->email}}</td>
+                        <td>
+                            <a class="badge bg-info text-decoration-none" href="{{route('acceptfriend',$row->id)}}">Accept</a>
+                        </td>
+                         <td>
+                            <a class="badge bg-danger text-decoration-none" href="{{route('declinefriend',$row->id)}}">Decline</a>
+                        </td>
+                        <!-- <td><span class="badge bg-warning text-dark">{{$row->status}}</span></td> -->
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @endif
 
     <!-- All Friends List Section -->
     <div class="card mb-5 shadow-sm">
@@ -88,12 +149,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                    $i = 0;
+                    @endphp
                     @foreach($approvedlist as $row)
+                    @php
+                    $i++;
+                    @endphp
                     <tr>
-                        <td>1.</td>
+                        <td>{{$i}}.</td>
                         <td>{{$row->username}}</td>
                         <td>{{$row->contact}}</td>
                         <td>{{$row->email}}</td>
+                        
                         <!-- <td><span class="badge bg-warning text-dark">{{$row->status}}</span></td> -->
                     </tr>
                     @endforeach

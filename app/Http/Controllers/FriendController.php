@@ -11,13 +11,24 @@ class FriendController extends Controller
     public function friendList()
     {
       $sessionUser =session('user');
-      
-      $pendingFriend = DB::table('friend_list')
+      $WaitingApprovalFriend = DB::table('friend_list')
           ->join('appuser','friend_list.friendid',"=","appuser.uid")
           ->where([
             'userid'=>$sessionUser->uid,
             'status'=>"pending"
           ])->get();
+
+      // echo "<pre>";
+      // print_r($WaitingApprovalFriend);
+      // exit;
+      
+      $pendingFriend = DB::table('friend_list')
+          ->join('appuser','friend_list.userid',"=","appuser.uid")
+          ->where([
+            'friendid'=>$sessionUser->uid,
+            'status'=>"pending"
+          ])->get();
+          
       $approvedFriend = DB::table('friend_list')
           ->join('appuser','friend_list.friendid',"=","appuser.uid")
           ->where([
@@ -25,7 +36,7 @@ class FriendController extends Controller
             'status'=>"approved"
           ])->get();
       
-      return view('user.friendlist',['pendinglist'=>$pendingFriend,"approvedlist"=>$approvedFriend]);
+      return view('user.friendlist',['pendinglist'=>$pendingFriend,"approvedlist"=>$approvedFriend,'WaitingApprovalFriend'=>$WaitingApprovalFriend]);
     }
 
     public function findFriend(Request $request)
@@ -68,6 +79,30 @@ class FriendController extends Controller
           'friendid'=>$request->friendId,
           'status'=>'pending'
         ]);
+        return redirect('/friendlist');
+    }
+
+
+
+    function acceptfriend(Request $request){
+        $friends=DB::table('friend_list')->where('id',$request->id)->first();
+        print_r($friends);
+        
+        $updateData = DB::table('friend_list')->where('id',$request->id)->update([
+             'status'=>'approved'
+        ]);
+
+        $insertData = DB::table('friend_list')->insert([
+            'userid'=>$friends->friendid,
+            'friendid'=>$friends->userid,
+            'status'=>"approved"
+        ]);
+        return redirect('/friendlist');
+    }
+
+    function declinefriend(Request $request){
+        $friends=DB::table('friend_list')->where('id',$request->id)->delete();
+        
         return redirect('/friendlist');
     }
 }
