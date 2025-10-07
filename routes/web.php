@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\VerificationMail;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\TransactionController;
 
 
 
@@ -36,6 +37,7 @@ Route::middleware(['UserAuth'])->group(function(){
     Route::get('/acceptfriend/{id}',[FriendController::class,'acceptfriend'])->name('acceptfriend');
 
     Route::get('/declinefriend/{id}',[FriendController::class,'declinefriend'])->name('declinefriend');
+     Route::get('/transaction',[TransactionController::class,'index'])->name('transaction');
 
 });
 
